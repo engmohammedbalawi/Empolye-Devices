@@ -112,7 +112,7 @@
         console.log('selectedDeviceType',selectedDeviceType)
         if (selectedDeviceType == 2) {
             console.log('selectedDeviceType==2')
-            $('#ramdevice, #storagedevice, #cpu').closest('.mb-3').val('').hide().prop('disabled', true);
+            $('#ramdevice, #storagedevice, #cpu').val('').closest('.mb-3').hide().prop('disabled', true);
         } else {
             $('#ramdevice, #storagedevice, #cpu').closest('.mb-3').show().prop('disabled', false);
         }
