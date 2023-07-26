@@ -149,6 +149,7 @@
                             xhr.setRequestHeader("X-CSRFToken", csrfToken);
                         },
                         success: function(response) {
+                          toastr.success('تمت الحذف بنجاح.');
 
                             fetch()
 
@@ -198,7 +199,7 @@
           data: formData,
           success: function(response) {
               if (response.success) {
-                  alert('Update successful!');
+                toastr.success(' تم النحديث بنجاح');
                   fetch()
                   console.log('Update successful!');
               } else {
