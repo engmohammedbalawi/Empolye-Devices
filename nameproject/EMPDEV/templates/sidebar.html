@@ -1,0 +1,43 @@
+{% load static %}
+<div class="wrapper d-flex align-items-stretch" dir="ltr">
+    <nav id="sidebar" class="order-last"  >
+    <div class="custom-menu">
+    <button type="button" id="sidebarCollapse" class="btn btn-primary">
+    </button>
+    </div>
+    <div class="">
+    <h1><a href="https://moa.gov.ps" class="logo">دولة فلسطين <span>وزارة الزراعة</span></a></h1>
+    <ul class="list-unstyled components mb-5">
+    <li class="active">
+    <a href="{% url 'welcome' %}"><span class="fa fa-home mr-3"></span> الصفحة الرئيسية</a>
+    </li>
+    <li>
+    <a href="{% url 'index' %}"><span class="fa fa-user mr-3"></span> أجهزة الموظفين</a>
+    </li>
+    <li>
+    <a href="{% url 'indexpa' %}"><span class="fa fa-sticky-note mr-2"></span> الأدرات العامة والوحدات</a>
+    </li>
+    <li>
+    <a href="{% url 'indexemp' %}"><span class="fa fa-cogs mr-3"></span> موظفين الوزارة</a>
+    </li>
+
+    <li>
+        <a href="{% url 'logout' %}"><span class="fa fa-cogs mr-3"></span> تسجيل الخروج </a>
+        </li>
+    
+   
+    
+    </li>
+    </ul>
+
+
+
+
+
+    <div class="footer px-4">
+    <p>
+    Copyright &copy;<script>document.write(new Date().getFullYear());</script> جميع الحقوق محفوظة دائرة الشبكات والدعم الفني <i class="icon-heart" aria-hidden="true"></i></a>
+    </p>
+    </div>
+    </div>
+    </nav>

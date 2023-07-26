@@ -1,0 +1,21 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block 'style' %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+{% endblock 'style' %}
+
+{% block 'content' %}
+
+    {% include 'sidebar.html' %}
+    <div id="content"  class="p-4 p-md-5 pt-5">
+        {% block 'welcome' %}{% endblock 'welcome' %}
+        {% block 'index1' %}{% endblock 'index1' %}
+        {% block 'indexpa' %}{% endblock 'indexpa' %}
+        {% block 'indexemp' %}{% endblock 'indexemp' %}
+        {% block 'details' %}{% endblock 'details' %}
+
+    </div>
+ 
+    {% endblock 'content' %}

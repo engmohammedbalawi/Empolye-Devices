@@ -1,0 +1,312 @@
+{% extends 'base.html' %}
+
+{% block 'index1' %}
+
+
+<br>
+<!-- Button trigger modal -->
+<div style="margin:0 auto;" class="center">
+  <button type="button" class="btn btn-primary pull-left" data-toggle="modal" data-target="#exampleModal" >
+      إضافة
+  </button>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"> إضافة جهاز</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" enctype="multipart/form-data" id="myform" data-parsley-validate="">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-6 mb-3" dir="rtl">
+                            <label dir="rtl">أدخل موديل الجهاز :</label>
+                            <input type="text" id="modal" name="modal" class="form-control" required="" />
+                        </div>
+                        <div class="col-6 mb-3" dri="rtl">
+                            <label for="employee">إسم الموظف:</label>
+                            <select name="employe" id="employe" class="employee-select" style="width: 100%;" data-tags="true" required >
+                                {% for all_emp in all_emp %}
+                                    <option value="{{ all_emp.id }}">{{ all_emp.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 mb-3" dir="rtl">
+                            <label dir="rtl">سيريال الجهاز :</label>
+                            <input type="text" id="serialnumber" name="serialnumber" class="form-control" required  />
+                        </div>
+                        <div class="col-6 mb-3 toggle-target" dir="rtl">
+                            <label dir="rtl">المعالج :</label>
+                            <input type="text" id="cpu" name="cpu" class="form-control"  />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 mb-3" dir="rtl">
+                            <label dir="rtl">تاريخ الاستلام :</label>
+                            <input type="date" id="date" name="date" class="form-control" required  />
+                        </div>
+                        <div class="col-6 mb-3" dir="rtl">
+                            <label dir="rtl">التقيم :</label>
+                            <input type="text" id="rate" name="rate" class="form-control" required />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 mb-3 dri="rtl">
+                            <label for="typedevice">النوع :</label>
+                            <select name="typedevice" id="typedevice" class="form-control" required >
+                                {% for typedevice in typedevice %}
+                                    <option value="{{ typedevice.id }}">{{ typedevice.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-6 mb-3 toggle-target" dri="rtl">
+                            <label for="ramdevice">حجم الرام:</label> 
+                            <select name="ramdevice" id="ramdevice" class="form-control"  >
+                                {% for ram in ram %}
+                                    <option value="{{ ram.id }}">{{ ram.size }} - {{ram.type}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 mb-3 toggle-target" dri="rtl">
+                            <label for="storagedevice">حجم التخزين:</label>
+                            <select name="storagedevice" id="storagedevice" class="form-control"  >
+                                {% for storage in storage %}
+                                    <option value="{{ storage.id }}">{{ storage.size }} - {{storage.type}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إغلاق</button>
+                <button type="button" class="btn btn-primary" id="submitdevice">إضافة</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<br>
+
+<div id='tablecont'>
+</div>
+
+<div id='edit'>
+</div>
+{% endblock 'index1' %}
+
+{% block 'jsindex' %}
+<script type="text/javascript">
+    function toggleDeviceFields() {
+        var selectedDeviceType = $('#typedevice').val();
+        console.log('selectedDeviceType',selectedDeviceType)
+        if (selectedDeviceType == 2) {
+            console.log('selectedDeviceType==2')
+            $('#ramdevice, #storagedevice, #cpu').closest('.mb-3').val('').hide().prop('disabled', true);
+        } else {
+            $('#ramdevice, #storagedevice, #cpu').closest('.mb-3').show().prop('disabled', false);
+        }
+    }
+
+    $(document).ready(function () {
+        $('.employee-select').select2({
+            dropdownParent: '#exampleModal',
+            dir: 'rtl'
+        });
+
+        toggleDeviceFields();
+
+        $('#typedevice').on('change', function () {
+            toggleDeviceFields();
+        });
+    });
+   
+      function fetch() {
+        $.ajax({
+          type: 'GET',
+          url: 'table/',
+          success: function(response) {
+            console.log(response);
+            $('#tablecont').html(response);
+            $('#table').DataTable();
+          },
+          error: function(xhr, status, error) {
+            alert(xhr.responseText);
+          }
+        });
+      }
+      fetch();
+ 
+
+
+  
+    
+
+    var instance = $('#myform').parsley();
+    $(document).on('click', '#submitdevice', function(event) {
+      event.preventDefault();
+      if (!instance.isValid()) {
+        
+        instance.validate();
+        return;
+    }
+      var serialnumber = $('#serialnumber').val();
+      var modal = $('#modal').val();
+      var cpu = $('#cpu').val();
+      var rate = $('#rate').val();
+      var date = $('#date').val();
+      var typedevice = $('#typedevice').val();
+      var ramdevice = $('#ramdevice').val();
+      var employe = $('#employe').val();
+      var storagedevice = $('#storagedevice').val();
+    
+      var form_data = new FormData();
+      form_data.append('serialnumber', serialnumber);
+      form_data.append('cpu', cpu);
+      form_data.append('rate', rate);
+      form_data.append('modal', modal);
+      form_data.append('date', date);
+      form_data.append('typedevice', typedevice);
+      form_data.append('ramdevice', ramdevice);
+      form_data.append('employe', employe);
+      form_data.append('storagedevice', storagedevice);
+      form_data.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+    
+      $.ajax({
+        type: 'POST',
+        url: 'insertdevice/',
+        data: form_data,
+        contentType: false,
+        processData: false,
+        beforeSend: function() {
+          // Code to execute before sending the request
+        },
+        success: function() {
+          fetch()
+          toastr.success('تمت الاضافة بنجاح.');
+          $('#serialnumber').val('');
+          $('#modal').val('')
+          $('#cpu').val('');
+          $('#rate').val('');;
+          $('#date').val('');
+          $('#typedevice').val('');
+          $('#ramdevice').val('');
+          $('#employe').val('');
+          $('#storagedevice').val('');
+          $('#exampleModal').modal('hide');
+        },
+        error: function(xhr, status, error) {
+          alert(xhr.responseText);
+        },
+        complete: function() {
+          // Code to execute after the request completes
+        }
+      });
+    
+    });
+
+    $(document).on('click', '.delete-btn', function(event) {
+            
+      event.preventDefault();       
+      var postId = $(this).data('id');
+      var csrfToken = "{{ csrf_token }}";
+    
+      bootbox.confirm({
+          message: "هل تريد حذف العنصر؟",
+          buttons: {
+              confirm: {
+                  label: 'نعم',
+                  className: 'btn-danger'
+              },
+              cancel: {
+                  label: 'لا',
+                  className: 'btn-secondary'
+              }
+          },
+          callback: function(result) {
+              if (result) {
+                  $.ajax({
+                      type: 'DELETE',
+                      url: 'deletedevice/' + postId + '/',
+                      data: {
+                          csrfmiddlewaretoken: csrfToken
+                      },
+                      beforeSend: function(xhr) {
+                          xhr.setRequestHeader("X-CSRFToken", csrfToken);
+                      },
+                      success: function(response) {
+
+                          fetch()
+
+                      },
+                      error: function(xhr, errmsg, err) {
+                          console.log(xhr.status + ": " + xhr.responseText);
+                      }
+                  });
+              }
+          }
+      });
+  });
+
+  $(document).on('click', '.edit-btn', function(e) {
+    e.preventDefault();
+    var postId = $(this).data('id');
+    console.log(postId)
+    
+    $.ajax({
+        type: 'GET',
+        url: '/index/edit/' + postId + '/',
+        success: function(response) {
+            $('#edit').html(response);
+            
+            $('#editdevice').modal('show');
+        },
+        error: function(xhr, errmsg, err) {
+            console.log(xhr.status + ": " + xhr.responseText);
+        }
+    });
+});
+
+
+$(document).on('click', '#submitdevices', function(e) {
+    e.preventDefault();
+    
+    var form = $('#edit-forms');
+    var formData = form.serialize();
+    
+    var postId = $(this).data('id');
+    console.log(postId)
+    
+    $.ajax({
+        type: 'POST',
+        url: '/index/update/' + postId + '/',
+        data: formData,
+        success: function(response) {
+            if (response.success) {
+                alert('Update successful!');
+                fetch()
+                console.log('Update successful!');
+            } else {
+                console.log('Update failed.');
+            }
+            
+            $('#editdevice').modal('hide'); 
+        },
+        error: function(xhr, errmsg, err) {
+            console.log(xhr.status + ": " + xhr.responseText);
+        }
+    });
+});
+
+    </script>
+    {% endblock 'jsindex' %}

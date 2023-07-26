@@ -1,0 +1,139 @@
+@page {
+    size: A4;
+    margin: 2cm;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    direction: rtl;
+    margin: 0;
+}
+
+.header {
+    background-color: #333;
+    padding: 20px;
+    color: #fff;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.menu {
+    background-color: #ddd;
+    padding: 20px;
+    width: 200px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    margin-top: 20px;
+}
+
+.menu li {
+    margin-bottom: 10px;
+}
+
+.menu a {
+    color: #333;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+}
+
+.menu svg {
+    margin-right: 5px;
+}
+
+.content {
+    margin-left: 240px;
+    padding: 20px;
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.form-field {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.form-field label {
+    width: 200px;
+    text-align: right;
+    margin-right: 10px;
+}
+
+.form-field input[type="text"],
+.form-field input[type="date"] {
+    width: 300px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.form-field input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.form-field input[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.form-section {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.form-field.right {
+    text-align: center;
+    margin-right: auto;
+    margin-left: 10px;
+}
+
+.form-field.left {
+    text-align: left;
+    margin-right: 10px;
+    margin-left: auto;
+}
+
+
+
+
+
+
+/* Adjustments for barcode */
+

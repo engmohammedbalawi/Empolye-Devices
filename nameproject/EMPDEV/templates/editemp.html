@@ -1,0 +1,50 @@
+<div class="modal fade" id="editemp" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form method="POST" enctype="multipart/form-data" id="edit-forms">
+          
+            {% csrf_token %}
+          
+         
+            <div class="mb-3" dir="rtl">
+              <label dir="rtl">إسم الموظف:</label>
+              <input type="text" id="name" name="name" class="form-control" value="{{all_emp.name}}" />
+          </div>
+          
+            <div class="mb-3" dri="rtl">
+                <label for="employee">الأدارة:</label>
+                <select name="pubad" id="pubad" class="form-control">
+                    {% for all_pa in all_pa %}
+                        <option value="{{ all_pa.id }}">{{ all_pa.name }}</option>
+                    {% endfor %}
+                </select>
+                
+            </div>
+            <div class="mb-3" dir="rtl">
+                <label dir="rtl">رقم هاتف الموظف:</label>
+                <input type="text" id="phone" name="phone" class="form-control" value="{{all_emp.phone}}" />
+            </div>
+            <div class="mb-3" dir="rtl">
+                <label dir="rtl">الرقم الوظيفي:</label>
+                <input type="text" id="empnumber" name="empnumber" class="form-control" value="{{all_emp.empnumber}}" />
+            </div>
+            <div class="mb-3" dir="rtl">
+              <label dir="rtl">مكان العمل:</label>
+              <input type="text" id="location" name="location" class="form-control" value="{{all_emp.location}}" />
+          </div>
+        </form>
+    </div>
+  
+    
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إغلاق</button>
+        <button type="button" class="btn btn-primary" id="submitemps"  data-id="{{ all_emp.id }}">إضافة</button>
+    </div>
+  </div>

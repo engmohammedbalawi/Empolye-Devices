@@ -1,0 +1,71 @@
+<div class="modal fade" id="editdevice" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form method="POST" enctype="multipart/form-data" id="edit-forms">
+            
+              {% csrf_token %}
+            
+           
+              <div class="mb-3" dir="rtl">
+                <label dir="rtl">السيريال:</label>
+                <input type="text" id="serialnumber" name="serialnumber" class="form-control" value="{{device.serialnumber}}" />
+            </div>
+            <div class="mb-3" dir="rtl">
+                <label dir="rtl">المودل :</label>
+                <input type="text" id="modal" name="modal" class="form-control" value="{{device.modal}}" />
+            </div>
+            <div class="mb-3" dir="rtl">
+                <label dir="rtl">المعالج :</label>
+                <input type="text" id="cpu" name="cpu" class="form-control" value="{{device.cpu}}" />
+            </div>
+            <div class="mb-3" dir="rtl">
+                <label dir="rtl">التقيم :</label>
+                <input type="text" id="rate" name="rate" class="form-control" value="{{device.rate}}" />
+            </div>
+            <div class="mb-3" dir="rtl">
+                <label dir="rtl">التاريخ :</label>
+                <input type="date" id="date" name="date" class="form-control" value="{{device.date}}" />
+            </div>
+            
+              <div class="mb-3" dri="rtl">
+                  <label for="employee">النوع:</label>
+                  <select name="typedevice" id="typedevice" class="form-control">
+                      {% for types in types %}
+                          <option value="{{ types.id }}">{{ types.name }}</option>
+                      {% endfor %}
+                  </select>
+                  
+              </div>
+              <div class="mb-3" dri="rtl">
+                <label for="ramdevice">حجم الرام:</label>
+                <select name="ramdevice" id="ramdevice" class="form-control">
+                    {% for ram in ram %}
+                        <option value="{{ ram.id }}">{{ ram.size }} - {{ram.type}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+       
+
+            <div class="mb-3" dri="rtl">
+                <label for="storagedevice">حجم التخزين:</label>
+                <select name="storagedevice" id="storagedevice" class="form-control">
+                    {% for storage in storage %}
+                        <option value="{{ storage.id }}">{{ storage.size }} - {{storage.type}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+      
+      <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إغلاق</button>
+          <button type="button" class="btn btn-primary" id="submitdevices"  data-id="{{ all_device.id }}">إضافة</button>
+      </div>
+    </div>

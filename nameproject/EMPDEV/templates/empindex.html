@@ -1,0 +1,245 @@
+{% extends 'base.html' %}
+{% block 'indexemp' %}
+<br>
+<!-- Button trigger modal -->
+<div style="margin:0 auto;" class="center">
+<button type="button" class="btn btn-primary pull-left" data-toggle="modal" data-target="#exampleModal">
+  إضافة
+</button>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"> إضافة موظف</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form method="POST" enctype="multipart/form-data" id="myform" data-parsley-validate="">
+          
+            {% csrf_token %}
+          
+         
+            <div class="mb-3" dir="rtl">
+              <label dir="rtl">أدخل اسم الموظف:</label>
+              <input type="text" id="name" name="name" class="form-control" required="" />
+          </div>
+          
+            <div class="mb-3" dri="rtl">
+                <label for="employee">الأدارة:</label>
+                <select name="pubad" id="pubad" class="form-control" required="">
+                    {% for Publicad in Publicad %}
+                        <option value="{{ Publicad.id }}">{{ Publicad.name }}</option>
+                    {% endfor %}
+                </select>
+                
+            </div>
+            <div class="mb-3" dir="rtl">
+                <label dir="rtl">رقم هاتف الموظف:</label>
+                <input type="text" id="phone" name="phone" class="form-control" required=""/>
+            </div>
+            <div class="mb-3" dir="rtl">
+                <label dir="rtl">الرقم الوظيفي:</label>
+                <input type="text" id="empnumber" name="empnumber" class="form-control" required=""/>
+            </div>
+            <div class="mb-3" dir="rtl">
+              <label dir="rtl">مكان العمل:</label>
+              <input type="text" id="location" name="location" class="form-control" required=""/>
+          </div>
+        </form>
+    </div>
+  
+    
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إغلاق</button>
+        <button type="button" class="btn btn-primary" id="submitemp">إضافة</button>
+    </div>
+  </div>
+  </div>
+</div>
+<br>
+<br>
+
+<div id='tablecont'>
+</div>
+
+
+<div id='edit'>
+</div>
+{% endblock 'indexemp' %}
+
+{% block 'jss' %}
+
+<script type="text/javascript">
+
+      function fetch() {
+        $.ajax({
+          type: 'GET',
+          url: 'tableemp/',
+          success: function(response) {
+            console.log(response);
+            $('#tablecont').html(response);
+            $('#table').DataTable();
+          },
+          error: function(xhr, status, error) {
+            alert(xhr.responseText);
+          }
+        });
+      }
+      fetch();
+      var instance = $('#myform').parsley();
+      $(document).on('click', '#submitemp', function(event) {
+        
+        event.preventDefault();
+        if (!instance.isValid()) {
+        
+          instance.validate();
+          return;
+      }
+        
+        var $name = $('#name').val();
+        var $phone = $('#phone').val();
+        var $empnumber = $('#empnumber').val();
+        var $public_ad = $('#pubad').val();
+        var $location = $('#location').val();
+      
+        var form_data = new FormData();
+        form_data.append('name', $name);
+        form_data.append('phone', $phone);
+        form_data.append('empnumber', $empnumber);
+        form_data.append('location', $location);
+        form_data.append('pubad', $public_ad);
+        form_data.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+      
+        $.ajax({
+          type: 'POST',
+          url: 'insertemp/',
+          data: form_data,
+          contentType: false,
+          processData: false,
+          beforeSend: function() {
+            // Code to execute before sending the request
+          },
+          success: function() {
+            fetch();
+            toastr.success('تمت الاضافة بنجاح.');
+            $('#name').val('');
+            $('#phone').val('');
+            $('#empnumber').val('');
+            $('#pubad').val('');
+            $('#location').val('');
+            $('#exampleModal').modal('hide');
+          },
+          error: function(xhr, status, error) {
+            alert(xhr.responseText);
+          },
+          complete: function() {
+            // Code to execute after the request completes
+          }
+        });
+      
+      });
+
+      $(document).on('click', '.delete-btn', function(event) {
+            
+        event.preventDefault();       
+        var postId = $(this).data('id');
+        var csrfToken = "{{ csrf_token }}";
+      
+        bootbox.confirm({
+            message: "هل تريد حذف العنصر؟",
+            buttons: {
+                confirm: {
+                    label: 'نعم',
+                    className: 'btn-danger'
+                },
+                cancel: {
+                    label: 'لا',
+                    className: 'btn-secondary'
+                }
+            },
+            callback: function(result) {
+                if (result) {
+                    $.ajax({
+                        type: 'DELETE',
+                        url: 'deleteemp/' + postId + '/',
+                        data: {
+                            csrfmiddlewaretoken: csrfToken
+                        },
+                        beforeSend: function(xhr) {
+                            xhr.setRequestHeader("X-CSRFToken", csrfToken);
+                        },
+                        success: function(response) {
+                            alert('تت العملية بنجاح')
+                            fetch()
+
+                        },
+                        error: function(xhr, errmsg, err) {
+                            console.log(xhr.status + ": " + xhr.responseText);
+                        }
+                    });
+                }
+            }
+        });
+    });
+
+    $(document).on('click', '.edit-btn', function(e) {
+      e.preventDefault();
+      var postId = $(this).data('id');
+      console.log(postId)
+      
+      $.ajax({
+          type: 'GET',
+          url: '/indexemp/edit/' + postId + '/',
+          success: function(response) {
+              $('#edit').html(response);
+              
+              $('#editemp').modal('show');
+          },
+          error: function(xhr, errmsg, err) {
+              console.log(xhr.status + ": " + xhr.responseText);
+          }
+      });
+  });
+
+  $(document).on('click', '#submitemps', function(e) {
+    e.preventDefault();
+    
+    var form = $('#edit-forms');
+    var formData = form.serialize();
+    
+    var postId = $(this).data('id');
+    console.log(postId)
+    
+    $.ajax({
+        type: 'POST',
+        url: '/indexemp/update/' + postId + '/',
+        data: formData,
+        success: function(response) {
+            if (response.success) {
+                alert('Update successful!');
+                fetch()
+                console.log('Update successful!');
+            } else {
+                console.log('Update failed.');
+            }
+            
+            $('#editemp').modal('hide'); 
+        },
+        error: function(xhr, errmsg, err) {
+            console.log(xhr.status + ": " + xhr.responseText);
+        }
+    });
+});
+
+
+
+
+
+    </script>
+    {% endblock 'jss' %}
+
+

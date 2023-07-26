@@ -1,0 +1,27 @@
+<table id="table">
+    <thead>
+        <tr>
+            <th>اجراءات الصيانة</th>
+            <th>تكلفة الصيانة</th>
+            <th>تاريخ الاستلام</th>
+            <th> تاريخ التسليم</th>
+            <th>نوع العطل</th>
+            <th>سيريال الجهاز</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for Maintainace in Maintainace %}
+        <tr>
+            <td>{{ Maintainace.stpes }}</td>
+            <td>{{ Maintainace.cost }}</td>
+            <td>{{ Maintainace.datein }}</td>
+            <td>{{ Maintainace.dateout }}</td>
+            <td>{{ Maintainace.TypeBreak }}</td>
+            <td>{{ Maintainace.device }}</td>
+        </tr>
+        {% endfor %}
+
+
+    </tbody>
+</table>
+<p>اجمالي مبلغ الصيانة: <span id="total-cost">{{ total_cost }}</span></p>

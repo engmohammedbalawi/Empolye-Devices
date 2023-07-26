@@ -1,0 +1,68 @@
+
+{% load static %}
+<table id="table"  dir="rtl" class="table cell-border" style="margin: 0 auto; border:5px solid;text-align:center;border-radius: 10px; border-color: #96D4D4;">
+    <thead >
+        <tr>
+            <th>اسم الموظف</th>
+            <th>الادارة</th>
+            <th>تاريخ الاستلام</th>
+            <th>نوع الجهاز</th>
+            <th>السيريال</th>
+            <th>الموديل</th>
+            <th>المعالج</th>
+            <th>حجم الرام ونوعها</th>
+            <th>التخزين ونوعه</th>
+            <th>التقيم</th>
+            
+            <th class="px-1 py-2 font-medium text-jibuttonBlue text-left">
+                <div class="">
+                  
+                  <img src="{% static 'img/work.png' %}" alt="" height='40' width='40'>
+                </div>
+              </th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for all_device in all_device %}
+        <tr>
+            <td>{{ all_device.Employe.name }}</td>
+            <td>{{ all_device.Employe.PublicAd.name }}</td>
+            <td>{{ all_device.date }}</td>
+            <td>{{ all_device.TypeDevice.name }}</td>
+            <td>{{ all_device.serialnumber }}</td>
+            <td>{{ all_device.modal }}</td>
+            <td>{{ all_device.cpu }}</td>
+            <td>{{ all_device.RamDevice.type }} {{ all_device.RamDevice.size }}G</td>
+            <td>{{ all_device.StorgeDevice.type }} {{ all_device.StorgeDevice.size }}G</td>
+            <td>{{ all_device.rate }}</td>
+            
+            
+            <td>
+                <div class="dropdown">
+                    <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton{{ all_device.id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        العمليات
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton{{ all_device.id }}">
+                        <a class="dropdown-item delete-btn" href="#" data-id="{{ all_device.id }}">حذف</a>
+                        <a class="dropdown-item edit-btn" href="#" data-id="{{ all_device.id }}">تعديل</a>
+                        <a class="dropdown-item details-btn" href="details/{{all_device.id}}/{{all_device.Employe.name}}">التفاصيل</a>
+                        <a class="dropdown-item details-btn" href="maintaince/{{all_device.id}}/{{all_device.Employe.name}}">صيانة</a>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="9">NO Data Display</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
+
+  <script>
+      $(document).ready(function() {
+          $('.dropdown-toggle').dropdown();
+      });
+  </script>

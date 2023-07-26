@@ -1,0 +1,75 @@
+{% load static %}
+<!doctype html>
+
+<html lang="ar" dir="rtl">
+<head>
+<title>أجهزة الموظفين</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<style id="" media="all">
+</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+<link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/bootstrap-rtl.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/select2.min.css' %}">
+
+<link rel="stylesheet" href="{% static 'css/toastr.min.css' %}">
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.min.css">
+
+
+<link rel="stylesheet" href="{% static 'css/parsley.css' %}">
+
+
+{% block 'style' %}{% endblock 'style' %}
+
+
+  
+<meta name="robots" content="noindex, follow">
+</head>
+<body>
+    {% block 'content' %}{% endblock 'content' %}
+
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/parsley.js' %}"></script>
+    <script src="{% static 'js/popper.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+    
+    <script src="{% static 'js/toastr.min.js' %}"></script>
+   
+   
+    <script src="{% static 'js/select2.min.js' %}"></script>
+    <script defer src="{% static 'js/beacon.min.js' %}"></script>
+
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+<script src="https://malsup.github.io/jquery.blockUI.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/6.0.0/bootbox.min.js"></script>
+<script>
+
+toastr.options = {
+    "rtl":true,
+  "closeButton": false,
+  "debug": false,
+  "newestOnTop": false,
+  "progressBar": true,
+  "positionClass": "toast-top-left",
+  "preventDuplicates": false,
+  "onclick": null,
+  "showDuration": "300",
+  "hideDuration": "1000",
+  "timeOut": "5000",
+  "extendedTimeOut": "1000",
+  "showEasing": "swing",
+  "hideEasing": "linear",
+  "showMethod": "fadeIn",
+  "hideMethod": "fadeOut"
+}
+</script>
+{% block 'js' %}{% endblock 'js' %}
+{% block 'jss' %}{% endblock 'jss' %}
+{% block 'jsindex' %}{% endblock 'jsindex' %}
+
+    </body>
+    </html>

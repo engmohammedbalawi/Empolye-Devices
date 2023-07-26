@@ -1,0 +1,299 @@
+{% load static %}
+{% block 'details' %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   
+    <style>
+        @page {
+            size: A4;
+            margin: 2cm;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            direction: rtl;
+            margin: 0;
+        }
+
+        .header {
+            background-color: #333;
+            padding: 5px;
+            color: #fff;
+            text-align: center;
+        
+        }
+
+        .menu {
+            background-color: #ddd;
+            padding: 20px;
+            width: 200px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .menu ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            margin-top: 20px;
+        }
+
+        .menu li {
+            margin-bottom: 10px;
+        }
+
+        .menu a {
+            color: #333;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .menu svg {
+            margin-right: 5px;
+        }
+
+        .content {
+            margin-left: 240px;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .form-field {
+            display: flex;
+            align-items: ri;
+            margin-bottom: 10px;
+        }
+
+        .form-field label {
+            width: 150px;
+            text-align: right;
+            margin-right: 10px;
+        }
+
+        .form-field input[type="text"],
+        .form-field input[type="date"] {
+            width: 300px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 18px;
+        }
+
+        .form-field input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .form-field input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        h2 {
+            text-align: right;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .form-section {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .form-field.right {
+            text-align: right;
+            margin-right: auto;
+            margin-left: 10px;
+        }
+
+        .form-field.left {
+            text-align: right;
+            margin-right: 10px;
+            margin-left: auto;
+        }
+
+.
+
+.
+
+
+    /* Adjustments for barcode */
+    #barcodeContainer.
+
+
+        /* Adjustments for barcode */
+        #barcodeContainer svg {
+            width: 200px;
+            height: 200px;
+        }
+
+        /* List Format */
+        ul {
+            padding: 0;
+            margin: 0;
+        }
+
+        ul li {
+            list-style-type: none;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <h1>  التفاصيل</h1>
+        <img src="{% static 'img/agr.png' %}" width="180" height="100">
+    </div>
+
+
+
+    <div class="container">
+        <h2> بيانات الموظف</h2>
+      
+        <form method="POST" action="process.php">
+            <div class="form-section">
+                <div class="form-field left">
+                    <label for="employeeName">اسم الموظف</label>
+                    <input type="text" name="employeeName" id="employeeName" value="{{user.name}}" readonly required>
+                </div>
+
+                
+                <div class="form-field left">
+                    <label for="employeeID">الرقم الوظيفي</label>
+                    <input type="text" name="employeeID" id="employeeID" value="{{user.empnumber}}" readonly required>
+                </div>
+
+
+                <div class="form-field left">
+                    <label for="jobTitle">رقم الهاتف </label>
+                    <input type="text" name="jobTitle" id="jobTitle" value="{{user.phone}}" readonly required>
+                </div>
+
+
+                <div class="form-field left">
+                    <label for="generalManagerate">الادارة العامة</label>
+                    <input type="text" name="generalManagerate" id="generalManagerate" value="{{user.PublicAd.name}}" readonly  required>
+                </div>
+                <div class="form-field left">
+                    <label for="generalManagerate">مكان العمل</label>
+                    <input type="text" name="generalManagerate" id="generalManagerate" value="{{user.location}}" readonly  required>
+                </div>
+                
+
+
+
+
+
+          
+
+
+
+            </div>
+            
+
+            <div class="form-field">
+                <!-- زر الحفظ هنا -->
+             
+            </div>
+
+        </form>
+    </div>
+
+    <div class="container">
+        <h2>مواصفات الجهاز</h2>
+        <form method="POST" action="process.php">
+            {% for device in device %}
+            <div class="form-section">
+                <div class="form-field left">
+                    <label for="deviceModel">الموديل</label>
+                    <input type="text" name="deviceModel" id="deviceModel" readonly value="{{ device.modal }}" required>
+                </div>
+                <div class="form-field left">
+                    <label for="serialNumber">الرقم التسلسلي</label>
+                    <input type="text" name="serialNumber" id="serialNumber" readonly value="{{ device.serialnumber }}" required>
+                </div>
+                <div class="form-field left">
+                    <label for="externalGPU">النوع</label>
+                    <input type="text" name="externalGPU" id="externalGPU" readonly value="{{ device.TypeDevice.name }}" required>
+                </div>
+                <div class="form-field left">
+                    <label for="externalGPU">المعالج</label>
+                    <input type="text" name="externalGPU" id="externalGPU" readonly value="{{ device.cpu }}" required>
+                </div>
+                <div class="form-field left">
+                    <label for="externalGPU">التقيم</label>
+                    <input type="text" name="externalGPU" id="externalGPU" readonly value="{{ device.rate }}" required>
+                </div>
+                <div class="form-field left">
+                    <label for="externalGPU">تاريخ الاستلام</label>
+                    <input type="text" name="externalGPU" id="externalGPU" readonly value="{{ device.date }}" required>
+                </div>
+                <div class="form-field left">
+                    <label for="RAM">الذاكرة العشوائية</label>
+                    <input type="text" name="RAM" id="RAM" readonly value="{{ device.RamDevice.type }}/{{ device.RamDevice.size }}" required>
+                </div>
+                <div class="form-field left">
+                    <label for="storage">التخزين</label>
+                    <input type="text" name="storage" id="storage" readonly value="{{ device.StorgeDevice.type }}/{{ device.StorgeDevice.size }}" required>
+                </div>
+                <hr width="50%" />
+            </div>
+            <div class="btn-group">
+                <a class="dropdown-item details-btn" href="maintaince/{{device.id}}/{{device.Employe.name}}">عرض اجرءارات الصيانة</a>
+            </div>
+            {% endfor %}
+            <div class="card border-left-3 border-left-blue-400 rounded-left-0 mb-1">
+                <div class="card-footer d-flex justify-content-between align-items-center p-2">
+                    <div>
+                        <div class="btn-group">
+                            <a href="{% url 'index' %}" class="btn btn-sm bg-success"><i class="icon-redo2"></i> عودة</a>
+                        </div>
+                    
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    
+  
+
+    <script>
+        // كود جافا سكريبت هنا
+    </script>
+</body>
+
+</html>
+
+
+
+
+
+
+{% endblock 'details' %}

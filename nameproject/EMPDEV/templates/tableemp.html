@@ -1,0 +1,56 @@
+{% load static %}
+<table id="table"  dir="rtl" class="table cell-border" style="margin: 0 auto; border:5px solid;text-align:center;border-radius: 10px; border-color: #96D4D4;">
+    <thead >
+        <tr>
+            <th>إسم الموظف</th>
+            <th>الأدارة العامة</th>
+            <th>رقم الجوال</th>
+            <th>الرقم الوظيفي</th>
+            <th>مكان العمل</th>
+            <th class="px-1 py-2 font-medium text-jibuttonBlue text-left">
+                <div class="">
+                  
+                  <img src="{% static 'img/work.png' %}" alt="" height='40' width='40'>
+                </div>
+              </th>
+
+        </tr>
+    </thead>
+    <tbody>
+        {% for all_employe in all_employe %}
+        <tr>
+            <td>{{ all_employe.name }}</td>
+            <td>{{all_employe.PublicAd.name}}</td>
+            <td>{{all_employe.phone}}</td>
+            <td>{{all_employe.empnumber}}</td>
+            <td>{{all_employe.location}}</td>
+       
+
+            
+            <td>
+                <div class="dropdown">
+                    <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton{{ all_employe.id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        العمليات
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton{{ all_employe.id }}">
+                        <a class="dropdown-item delete-btn" href="#" data-id="{{ all_employe.id }}">حذف</a>
+                        <a class="dropdown-item edit-btn" href="#" data-id="{{ all_employe.id }}">تعديل</a>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="9">NO Data Display</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
+
+  <script>
+      $(document).ready(function() {
+          $('.dropdown-toggle').dropdown();
+      });
+  </script>
