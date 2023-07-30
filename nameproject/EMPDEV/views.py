@@ -337,3 +337,24 @@ def insertmain(request,id,name):
         return HttpResponse(status=200)  
     else:
         return HttpResponse(status=400)
+    
+
+
+
+@login_required
+def deletemaintaince(request, id,name,pk):
+    user = request.user
+    if request.method == 'DELETE':
+        try:
+            data = Maintainaces.objects.get(pk=pk)
+           
+            data.delete()
+
+       
+       
+
+            return JsonResponse({'message': 'Record deleted successfully'})
+        except PublicAd.DoesNotExist:
+            return JsonResponse({'message': 'Record does not exist'})
+    else:
+        return JsonResponse({'message': 'Invalid request method'})  

@@ -29,6 +29,7 @@ urlpatterns = [
     path('index/maintaince/<int:id>/<str:name>/',view=maintiance,name='maintaince'),
     path('index/maintaince/<int:id>/<str:name>/tablemain/',view=tablemain,name='tablemain'),
     path('index/maintaince/<int:id>/<str:name>/insertmain/',view=insertmain,name='insertmain'),
+    path('index/maintaince/<int:id>/<str:name>/deletemain/<int:pk>/',view=deletemaintaince,name='deletemaintaince'),
      
 
 

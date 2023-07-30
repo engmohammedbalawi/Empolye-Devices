@@ -126,7 +126,8 @@
                         <td><input type="text" name="cost" id="cost"></td>
                         <td> <input type="date" id="datein" name="datein" class="form-control"/></td>
                         <td> <input type="date" id="dateout" name="dateout" class="form-control"/></td>
-                        
+
+                       
                     </tr>
           
                     <!-- يمكنك إضافة مزيد من الصفوف هنا حسب الحاجة -->
@@ -217,5 +218,54 @@
       });
     
     });
+
+    $(document).on('click', '.delete-btn', function(event) {
+            
+            event.preventDefault();       
+            var postId = $(this).data('id');
+            var csrfToken = "{{ csrf_token }}";
+          
+            bootbox.confirm({
+                message: "هل تريد حذف العنصر؟",
+                buttons: {
+                    confirm: {
+                        label: 'نعم',
+                        className: 'btn-danger'
+                    },
+                    cancel: {
+                        label: 'لا',
+                        className: 'btn-secondary'
+                    }
+                },
+                callback: function(result) {
+                    if (result) {
+                        $.ajax({
+                            type: 'DELETE',
+                            url: 'deletemain/' + postId + '/',
+                            data: {
+                                csrfmiddlewaretoken: csrfToken
+                            },
+                            beforeSend: function(xhr) {
+                                xhr.setRequestHeader("X-CSRFToken", csrfToken);
+                            },
+                            success: function(response) {
+                              toastr.success('تمت الحذف بنجاح.');
+      
+                                fetch()
+      
+                            },
+                            error: function(xhr, errmsg, err) {
+                                console.log(xhr.status + ": " + xhr.responseText);
+                            }
+                        });
+                    }
+                }
+            });
+        });
+         
+
+    $(document).ready(function() {
+          $('.dropdown-toggle').dropdown();
+      });
     </script>
      {% endblock 'js' %}

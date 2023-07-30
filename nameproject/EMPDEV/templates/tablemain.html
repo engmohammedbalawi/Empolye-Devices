@@ -7,6 +7,7 @@
             <th> تاريخ التسليم</th>
             <th>نوع العطل</th>
             <th>سيريال الجهاز</th>
+            <th>العمليات</th>
         </tr>
     </thead>
     <tbody>
@@ -18,6 +19,18 @@
             <td>{{ Maintainace.dateout }}</td>
             <td>{{ Maintainace.TypeBreak }}</td>
             <td>{{ Maintainace.device }}</td>
+            <td>
+                <div class="dropdown">
+                    <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton{{ all_device.id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        العمليات
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton{{ all_device.id }}">
+                        <a class="dropdown-item delete-btn" href="#" data-id="{{ Maintainace.id }}">حذف</a>
+                    
+                    </div>
+                </div>
+            </td>
+            
         </tr>
         {% endfor %}
 
@@ -25,3 +38,10 @@
     </tbody>
 </table>
 <p>اجمالي مبلغ الصيانة: <span id="total-cost">{{ total_cost }}</span></p>
+
+
+<script>
+$(document).ready(function() {
+    $('.dropdown-toggle').dropdown();
+});
+</script>
